@@ -11,9 +11,17 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:tabTextColor="@android:color/white"
-        app:tabIndicatorColor="@android:color/white"/>
+        android:background="@drawable/ic_layout_bg"
+        android:elevation="10dp"
+        app:tabIconTintMode="src_over"
+        app:tabIndicatorAnimationDuration="@android:integer/config_mediumAnimTime"
+        app:tabIndicatorAnimationMode="elastic"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:tabTextColor="@android:color/white" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"

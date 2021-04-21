@@ -1,8 +1,9 @@
 package com.albar.moviecatalogue.data
 
 data class CatalogueEntity(
-    val id: Int = 0,
+    val id: String? = null,
     val image: String? = null,
+    val imageBackground: String? = null,
     val movieName: String? = null,
     val release: Int = 0,
     val review: String? = null,
