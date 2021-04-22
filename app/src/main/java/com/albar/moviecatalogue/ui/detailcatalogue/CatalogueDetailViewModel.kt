@@ -5,17 +5,19 @@ import com.albar.moviecatalogue.data.CatalogueEntity
 import com.albar.moviecatalogue.utils.DataDummy
 
 class CatalogueDetailViewModel : ViewModel() {
-    private lateinit var catalogueId: String
+    private lateinit var movieId: String
+    private lateinit var tvShowId: String
 
-    fun getMovieById(catalogueId: String) {
-        this.catalogueId = catalogueId
+    fun getCatalogue(catalogueId: String) {
+        this.movieId = catalogueId
+        this.tvShowId = catalogueId
     }
 
     fun getAllMovie(): CatalogueEntity {
         lateinit var detail: CatalogueEntity
         val detailEntities = DataDummy.getAllDummyMovie()
         for (detailEntity in detailEntities) {
-            if (detailEntity.id == catalogueId) {
+            if (detailEntity.id == movieId) {
                 detail = detailEntity
             }
         }
@@ -24,12 +26,13 @@ class CatalogueDetailViewModel : ViewModel() {
 
     fun getAllTvShow(): CatalogueEntity {
         lateinit var detail: CatalogueEntity
-        val detailEntities = DataDummy.generateDummyTvShow()
+        val detailEntities = DataDummy.getAllDummyTvShow()
         for (detailEntity in detailEntities) {
-            if (detailEntity.id == catalogueId) {
+            if (detailEntity.id == tvShowId) {
                 detail = detailEntity
             }
         }
         return detail
     }
+
 }

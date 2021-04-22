@@ -5,5 +5,5 @@ import com.albar.moviecatalogue.data.CatalogueEntity
 import com.albar.moviecatalogue.utils.DataDummy
 
 class TvShowViewModel : ViewModel() {
-    fun getAllTvShowDummy(): List<CatalogueEntity> = DataDummy.generateDummyTvShow()
+    fun getAllTvShowDummy(): List<CatalogueEntity> = DataDummy.getAllDummyTvShow()
 }

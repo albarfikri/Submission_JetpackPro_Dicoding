@@ -1,8 +1,10 @@
 package com.albar.moviecatalogue.ui.movie
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.albar.moviecatalogue.R
 import com.albar.moviecatalogue.data.CatalogueEntity
@@ -14,8 +16,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-    private var listMovie = ArrayList<CatalogueEntity>()
+class MovieAdapter(private val context: Context) :
+    RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+    private val listMovie = ArrayList<CatalogueEntity>()
 
     fun setMovie(movie: List<CatalogueEntity>) {
         this.listMovie.clear()
@@ -32,19 +35,31 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        holder.binding.tvMovieImage.startAnimation(
+            AnimationUtils.loadAnimation(
+                context,
+                R.anim.fragment_open_enter
+            )
+        )
+        holder.binding.tvMovieName.startAnimation(
+            AnimationUtils.loadAnimation(
+                context,
+                R.anim.fade_in
+            )
+        )
         val movie = listMovie[position]
         holder.bind(movie)
     }
 
     override fun getItemCount(): Int = listMovie.size
 
-    class MovieViewHolder(private val binding: ItemsMovieBinding) :
+    class MovieViewHolder(val binding: ItemsMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: CatalogueEntity) {
             with(binding) {
-                tvName.text = movie.movieName
-                tvReview.text = movie.review
-                tvPrice.text = movie.price
+                tvMovieName.text = movie.movieName
+                tvMovieReview.text = movie.review
+                tvMoviePrice.text = movie.price
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, CatalogueDetailActivity::class.java)
                     intent.putExtra(CatalogueDetailActivity.extraIdMovie, movie.id)
@@ -58,7 +73,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                             .error(R.drawable.ic_error)
                     )
                     .transform(CenterCrop(), RoundedCorners(10))
-                    .into(image)
+                    .into(tvMovieImage)
             }
         }
     }

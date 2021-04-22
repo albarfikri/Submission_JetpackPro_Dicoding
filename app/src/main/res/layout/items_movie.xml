@@ -16,7 +16,7 @@
         android:padding="12dp">
 
         <ImageView
-            android:id="@+id/image"
+            android:id="@+id/tv_movieImage"
             android:layout_width="120dp"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
@@ -29,7 +29,7 @@
             android:contentDescription="@string/image" />
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_movieName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -37,36 +37,36 @@
             android:gravity="center_vertical"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/image"
+            app:layout_constraintEnd_toEndOf="@+id/tv_movieImage"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/image"
-            app:layout_constraintTop_toBottomOf="@+id/image"
+            app:layout_constraintStart_toStartOf="@+id/tv_movieImage"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movieImage"
             tools:text="Name" />
 
         <TextView
-            android:id="@+id/tv_review"
+            android:id="@+id/tv_movieReview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginTop="4dp"
             android:gravity="center_vertical"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@+id/tv_name"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_movieName"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movieName"
             tools:text="Review" />
 
-        <ImageView
-            android:id="@+id/imageView"
+        <TextView
+            android:id="@+id/tv_tv_movieImageView"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:src="@drawable/ic_star"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_review"
-            app:layout_constraintStart_toEndOf="@+id/tv_review"
-            app:layout_constraintTop_toTopOf="@+id/tv_review"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_movieReview"
+            app:layout_constraintStart_toEndOf="@+id/tv_movieReview"
+            app:layout_constraintTop_toTopOf="@+id/tv_movieReview"
             android:contentDescription="@string/app_name" />
 
         <TextView
-            android:id="@+id/tv_price"
+            android:id="@+id/tv_moviePrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -74,9 +74,9 @@
             android:textColor="@color/teal_200"
             android:textSize="12sp"
 
-            app:layout_constraintBottom_toBottomOf="@+id/tv_review"
-            app:layout_constraintEnd_toEndOf="@+id/image"
-            app:layout_constraintTop_toTopOf="@+id/tv_review"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_movieReview"
+            app:layout_constraintEnd_toEndOf="@+id/tv_movieImage"
+            app:layout_constraintTop_toTopOf="@+id/tv_movieReview"
             tools:text="Price" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

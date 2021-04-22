@@ -16,7 +16,7 @@ class MovieFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMovieBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -30,8 +30,8 @@ class MovieFragment : Fragment() {
             )[MovieViewModel::class.java]
 
             val movie = viewModel.getAllMovieDummy()
-            val movieAdapter = MovieAdapter()
-            movieAdapter.setMovie(movie)
+            val movieAdapter = context?.let { MovieAdapter(it) }
+            movieAdapter?.setMovie(movie)
 
             with(binding.rvMovie) {
                 val orientation = resources.configuration.orientation

@@ -1,6 +1,7 @@
 package com.albar.moviecatalogue.ui.detailcatalogue
 
 import android.os.Bundle
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.albar.moviecatalogue.R
@@ -41,11 +42,11 @@ class CatalogueDetailActivity : AppCompatActivity() {
             val catalogueIdMovie = extras.getString(extraIdMovie)
             val catalogueIdTvShow = extras.getString(extraIdTvShow)
             if (catalogueIdMovie != null) {
-                viewModel.getMovieById(catalogueIdMovie)
+                viewModel.getCatalogue(catalogueIdMovie)
                 populateCatalogue(viewModel.getAllMovie())
             }
             if (catalogueIdTvShow != null) {
-                viewModel.getMovieById(catalogueIdTvShow)
+                viewModel.getCatalogue(catalogueIdTvShow)
                 populateCatalogue(viewModel.getAllTvShow())
             }
         }
@@ -71,6 +72,12 @@ class CatalogueDetailActivity : AppCompatActivity() {
                 .transform(CenterCrop(), RoundedCorners(20))
                 .into(image)
 
+            image.startAnimation(
+                AnimationUtils.loadAnimation(
+                    this@CatalogueDetailActivity,
+                    R.anim.fragment_open_enter
+                )
+            )
             Glide.with(this@CatalogueDetailActivity)
                 .load(catalogueEntity.imageBackground)
                 .transition(GenericTransitionOptions.with(R.anim.fragment_open_enter))
@@ -80,6 +87,13 @@ class CatalogueDetailActivity : AppCompatActivity() {
                 )
                 .transform(RoundedCorners(40))
                 .into(imagePoster)
+
+            imagePoster.startAnimation(
+                AnimationUtils.loadAnimation(
+                    this@CatalogueDetailActivity,
+                    R.anim.fragment_open_enter
+                )
+            )
         }
     }
 
