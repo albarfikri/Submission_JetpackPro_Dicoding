@@ -8,7 +8,6 @@ import com.albar.moviecatalogue.R
 import com.albar.moviecatalogue.data.CatalogueEntity
 import com.albar.moviecatalogue.databinding.ActivityCatalogueDetailBinding
 import com.albar.moviecatalogue.databinding.ContentDetailCatalogueBinding
-import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -64,7 +63,6 @@ class CatalogueDetailActivity : AppCompatActivity() {
             tvAbout.text = catalogueEntity.about
             Glide.with(this@CatalogueDetailActivity)
                 .load(catalogueEntity.image)
-                .transition(GenericTransitionOptions.with(R.anim.fragment_open_enter))
                 .apply(
                     RequestOptions.placeholderOf(R.drawable.ic_loading)
                         .error(R.drawable.ic_error)
@@ -72,15 +70,15 @@ class CatalogueDetailActivity : AppCompatActivity() {
                 .transform(CenterCrop(), RoundedCorners(20))
                 .into(image)
 
-            image.startAnimation(
+           image.startAnimation(
                 AnimationUtils.loadAnimation(
                     this@CatalogueDetailActivity,
                     R.anim.fragment_open_enter
                 )
             )
+
             Glide.with(this@CatalogueDetailActivity)
                 .load(catalogueEntity.imageBackground)
-                .transition(GenericTransitionOptions.with(R.anim.fragment_open_enter))
                 .apply(
                     RequestOptions.placeholderOf(R.drawable.ic_loading)
                         .error(R.drawable.ic_error)
@@ -94,6 +92,7 @@ class CatalogueDetailActivity : AppCompatActivity() {
                     R.anim.fragment_open_enter
                 )
             )
+
         }
     }
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="240dp"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
     app:cardCornerRadius="5dp"
@@ -55,7 +55,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_movieName"
             tools:text="Review" />
 
-        <TextView
+        <ImageView
             android:id="@+id/tv_tv_movieImageView"
             android:layout_width="12dp"
             android:layout_height="12dp"
@@ -71,9 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:textColor="@color/teal_200"
+            android:textColor="@color/teal_700"
             android:textSize="12sp"
-
             app:layout_constraintBottom_toBottomOf="@+id/tv_movieReview"
             app:layout_constraintEnd_toEndOf="@+id/tv_movieImage"
             app:layout_constraintTop_toTopOf="@+id/tv_movieReview"

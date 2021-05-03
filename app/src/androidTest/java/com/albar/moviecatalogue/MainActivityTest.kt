@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.openLinkWithText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -27,11 +28,14 @@ class MainActivityTest {
 
     @Before
     fun setUp() {
-        IdlingRegistry.getInstance().register(IdlingResource.EspressoIdlingResource.espressoTestIdlingResource)
+        IdlingRegistry.getInstance()
+            .register(IdlingResource.EspressoIdlingResource.espressoTestIdlingResource)
     }
+
     @After
     fun tearDown() {
-        IdlingRegistry.getInstance().unregister(IdlingResource.EspressoIdlingResource.espressoTestIdlingResource)
+        IdlingRegistry.getInstance()
+            .unregister(IdlingResource.EspressoIdlingResource.espressoTestIdlingResource)
     }
 
     @Test
@@ -48,12 +52,25 @@ class MainActivityTest {
                 click()
             )
         )
+
+        onView(withId(R.id.image_poster)).check(matches(isDisplayed()))
+        onView(withId(R.id.image)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_name)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_name)).check(matches(withText(dummyMovie[0].movieName)))
         onView(withId(R.id.tv_release)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_release)).check(matches(withText(dummyMovie[0].release.toString())))
         onView(withId(R.id.tv_price)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_price)).check(matches(withText(dummyMovie[0].price)))
+        onView(withId(R.id.tv_review)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_review)).check(matches(withText(dummyMovie[0].review)))
+        onView(withId(R.id.tv_rating)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_rating)).check(matches(withText(dummyMovie[0].rating.toString())))
+        onView(withId(R.id.tv_duration)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_duration)).check(matches(withText(dummyMovie[0].duration)))
+        onView(withId(R.id.btn_buy)).check(matches(isDisplayed()))
+        onView(withId(R.id.btn_buy)).perform(click())
+        onView(withId(R.id.tv_about)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_about)).check(matches(withText(dummyMovie[0].about)))
     }
 
 
@@ -72,12 +89,24 @@ class MainActivityTest {
                 click()
             )
         )
+        onView(withId(R.id.image_poster)).check(matches(isDisplayed()))
+        onView(withId(R.id.image)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_name)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_name)).check(matches(withText(dummyTvShow[0].movieName)))
         onView(withId(R.id.tv_release)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_release)).check(matches(withText(dummyTvShow[0].release.toString())))
         onView(withId(R.id.tv_price)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_price)).check(matches(withText(dummyTvShow[0].price)))
+        onView(withId(R.id.tv_review)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_review)).check(matches(withText(dummyTvShow[0].review)))
+        onView(withId(R.id.tv_rating)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_rating)).check(matches(withText(dummyTvShow[0].rating.toString())))
+        onView(withId(R.id.tv_duration)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_duration)).check(matches(withText(dummyTvShow[0].duration)))
+        onView(withId(R.id.btn_buy)).check(matches(isDisplayed()))
+        onView(withId(R.id.btn_buy)).perform(click())
+        onView(withId(R.id.tv_about)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_about)).check(matches(withText(dummyTvShow[0].about)))
     }
 
 }

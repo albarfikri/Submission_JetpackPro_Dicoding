@@ -32,6 +32,7 @@ class TvShowAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
+        val tvShow = listTvShow[position]
         holder.binding.tvShowImage.startAnimation(
             AnimationUtils.loadAnimation(
                 context,
@@ -44,7 +45,6 @@ class TvShowAdapter(private val context: Context) :
                 R.anim.fade_scale_animation
             )
         )
-        val tvShow = listTvShow[position]
         holder.bind(tvShow)
     }
 
