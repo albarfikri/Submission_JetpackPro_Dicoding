@@ -10,11 +10,7 @@ import retrofit2.await
 
 class RemoteDataSource {
 
-    private val handler = Handler(Looper.getMainLooper())
-
     companion object {
-        private const val delayTime: Long = 2000
-
         @Volatile
         private var instance: RemoteDataSource? = null
 

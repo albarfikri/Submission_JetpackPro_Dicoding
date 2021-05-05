@@ -10,4 +10,5 @@ import com.albar.moviecatalogue.utils.DataDummy
 class MovieViewModel(private val catalogueRepository: CatalogueRepository) : ViewModel() {
     fun getAllMovieDummy(): List<CatalogueEntity> = DataDummy.getAllDummyMovie()
     fun getAllMoviesList(): LiveData<List<CatalogueDataModel>> = catalogueRepository.getMovie()
+    fun getLoadingState() :LiveData<Boolean> = catalogueRepository.isLoading
 }

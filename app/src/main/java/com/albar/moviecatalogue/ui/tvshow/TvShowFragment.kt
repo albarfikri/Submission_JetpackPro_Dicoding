@@ -42,6 +42,10 @@ class TvShowFragment : Fragment() {
     }
 
     private fun viewModel() {
+        viewModel.getLoadingState().observe(this, {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+        })
+
         viewModel.getAllTvShowsList().observe(viewLifecycleOwner, Observer { listTvShows ->
             binding.rvTvshow.adapter?.let { adapter ->
                 when (adapter) {

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.albar.moviecatalogue.data.source.CatalogueRepository
 import com.albar.moviecatalogue.databinding.FragmentMovieBinding
 import com.albar.moviecatalogue.viewmodel.ViewModelFactory
 
@@ -42,6 +43,9 @@ class MovieFragment : Fragment() {
     }
 
     private fun viewModel() {
+        viewModel.getLoadingState().observe(this, {
+            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+        })
         viewModel.getAllMoviesList().observe(viewLifecycleOwner, Observer { listMovie ->
             binding.rvMovie.adapter?.let { adapter ->
                 when (adapter) {
@@ -63,4 +67,5 @@ class MovieFragment : Fragment() {
             adapter = MovieAdapter(context)
         }
     }
+
 }

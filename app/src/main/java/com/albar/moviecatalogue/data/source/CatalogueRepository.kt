@@ -12,9 +12,13 @@ import kotlinx.coroutines.launch
 class CatalogueRepository private constructor(private val remoteDataSource: RemoteDataSource) :
     CatalogueDataSource {
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     companion object {
         @Volatile
         private var instance: CatalogueRepository? = null
+
 
         fun getInstance(remoteData: RemoteDataSource): CatalogueRepository =
             instance ?: synchronized(this) {
@@ -25,6 +29,7 @@ class CatalogueRepository private constructor(private val remoteDataSource: Remo
 
     override fun getMovie(): LiveData<List<CatalogueDataModel>> {
         val listMoviesOutput = MutableLiveData<List<CatalogueDataModel>>()
+        _isLoading.value = true
         CoroutineScope(IO).launch {
             remoteDataSource.getMovies(object : RemoteDataSource.LoadMovieCallback {
                 override fun onAllMovieReceived(movieCatalogueResponse: List<ResultsItemMovie>) {
@@ -44,6 +49,7 @@ class CatalogueRepository private constructor(private val remoteDataSource: Remo
                         listMovies.add(movie)
                     }
                     listMoviesOutput.postValue(listMovies)
+                    _isLoading.postValue(false)
                 }
             })
         }
@@ -55,6 +61,7 @@ class CatalogueRepository private constructor(private val remoteDataSource: Remo
     }
 
     override fun getTvShow(): LiveData<List<CatalogueDataModel>> {
+        val listMoviesOutput = MutableLiveData<List<CatalogueDataModel>>()
         val listTvShowOutput = MutableLiveData<List<CatalogueDataModel>>()
         CoroutineScope(IO).launch {
             remoteDataSource.getTvShows(object : RemoteDataSource.LoadTvShowCallback {
@@ -73,6 +80,7 @@ class CatalogueRepository private constructor(private val remoteDataSource: Remo
                             response.overview
                         )
                         listTvShow.add(tvShows)
+                        _isLoading.postValue(false)
                     }
                     listTvShowOutput.postValue(listTvShow)
                 }

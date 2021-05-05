@@ -10,4 +10,5 @@ import com.albar.moviecatalogue.utils.DataDummy
 class TvShowViewModel(private val catalogueRepository: CatalogueRepository) : ViewModel() {
     fun getAllTvShowDummy(): List<CatalogueEntity> = DataDummy.getAllDummyTvShow()
     fun getAllTvShowsList(): LiveData<List<CatalogueDataModel>> = catalogueRepository.getTvShow()
+    fun getLoadingState() :LiveData<Boolean> = catalogueRepository.isLoading
 }
