@@ -37,9 +37,9 @@
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:gravity="start"
+            android:maxLines="2"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:maxLines="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_showImage"
             app:layout_constraintTop_toTopOf="parent"
@@ -50,47 +50,55 @@
             android:id="@+id/tv_showReview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_showPrice"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_showDate"
             app:layout_constraintEnd_toStartOf="@+id/tv_showImageView"
-            app:layout_constraintTop_toTopOf="@+id/tv_showPrice"
+            app:layout_constraintTop_toTopOf="@+id/tv_showDate"
             app:layout_constraintVertical_bias="1.0"
             tools:text="Review" />
 
-        <ImageView
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
             android:id="@+id/tv_showImageView"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:src="@drawable/ic_star"
+            android:layout_marginStart="4dp"
+            android:contentDescription="@string/image"
+            android:tooltipText="12"
+            app:cpb_background_progressbar_color="#f48fb1"
+            app:cpb_background_progressbar_width="5dp"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progress_max="10"
+            app:cpb_progressbar_color="#c2185b"
+            app:cpb_round_border="false"
             app:layout_constraintBottom_toBottomOf="@+id/tv_showReview"
             app:layout_constraintEnd_toEndOf="@+id/tv_showName"
-            app:layout_constraintTop_toTopOf="@+id/tv_showReview"
-            android:contentDescription="@string/image" />
+            app:layout_constraintTop_toTopOf="@+id/tv_showReview" />
 
         <TextView
-            android:id="@+id/tv_showPrice"
+            android:id="@+id/tv_showDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:gravity="start"
-            android:textSize="14sp"
             android:textColor="@color/teal_700"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/tv_showName"
             app:layout_constraintTop_toBottomOf="@+id/tv_showName"
-            tools:text="@string/app_name" />
+            tools:text="date" />
 
 
         <TextView
             android:id="@+id/tv_showDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
             android:gravity="start"
             android:textSize="12sp"
-            android:layout_marginTop="14dp"
-            app:layout_constraintStart_toStartOf="@+id/tv_showPrice"
-            app:layout_constraintTop_toBottomOf="@+id/tv_showPrice"
+            app:layout_constraintStart_toStartOf="@+id/tv_showDate"
+            app:layout_constraintTop_toBottomOf="@+id/tv_showDate"
             tools:text="@string/app_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,6 @@ package com.albar.moviecatalogue.utils
 import androidx.test.espresso.idling.CountingIdlingResource
 
 object IdlingResource {
-    object EspressoIdlingResource {
         private const val RESOURCE = "GLOBAL"
         val espressoTestIdlingResource = CountingIdlingResource(RESOURCE)
 
@@ -14,5 +13,4 @@ object IdlingResource {
         fun decrement() {
             espressoTestIdlingResource.decrement()
         }
-    }
 }
