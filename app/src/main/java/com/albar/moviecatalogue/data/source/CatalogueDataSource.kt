@@ -12,5 +12,4 @@ interface CatalogueDataSource {
     fun getTvShow(): LiveData<List<CatalogueDataModel>>
 
     fun getTvShowById(tvShowId: Int): LiveData<CatalogueDataModel>
-
 }

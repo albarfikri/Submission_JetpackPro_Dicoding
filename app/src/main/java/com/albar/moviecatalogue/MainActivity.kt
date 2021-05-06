@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         binding.viewPager.adapter = sectionsPagerAdapter
         binding.tabs.setupWithViewPager(binding.viewPager)
 
-
         supportActionBar?.elevation = 0f
     }
 }

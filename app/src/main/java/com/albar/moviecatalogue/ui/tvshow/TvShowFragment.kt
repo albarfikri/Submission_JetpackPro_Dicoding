@@ -46,7 +46,7 @@ class TvShowFragment : Fragment() {
             binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         })
 
-        viewModel.getAllTvShowsList().observe(viewLifecycleOwner, Observer { listTvShows ->
+        viewModel.getAllTvShowsList().observe(viewLifecycleOwner, { listTvShows ->
             binding.rvTvshow.adapter?.let { adapter ->
                 when (adapter) {
                     is TvShowAdapter -> adapter.setTvShow(listTvShows)

@@ -19,29 +19,29 @@ data class CatalogueTvShowResponse(
 
 data class ResultsItemTvShow(
 	@field:SerializedName("id")
-	val id: Int,
+	val id: Int = 0,
 
 	@field:SerializedName("original_name")
-	val originalName: String,
+	val originalName: String? = null,
 
 	@field:SerializedName("poster_path")
-	val posterPath: String,
+	val posterPath: String? = null,
 
 	@field:SerializedName("backdrop_path")
-	val backdropPath: String,
+	val backdropPath: String? = null,
 
 	@field:SerializedName("first_air_date")
-	val firstAirDate: String,
+	val firstAirDate: String? = null,
 
 	@field:SerializedName("popularity")
-	val popularity: Double,
+	val popularity: Double = 0.0,
 
 	@field:SerializedName("vote_average")
-	val voteAverage: Double,
+	val voteAverage: Double = 0.0,
 
 	@field:SerializedName("vote_count")
-	val voteCount: Int,
+	val voteCount: Int = 0,
 
 	@field:SerializedName("overview")
-	val overview: String
+	val overview: String? = null
 )

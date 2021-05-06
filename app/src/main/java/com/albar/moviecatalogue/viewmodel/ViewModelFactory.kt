@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.albar.moviecatalogue.data.source.CatalogueRepository
 import com.albar.moviecatalogue.di.Injection
+import com.albar.moviecatalogue.ui.detailcatalogue.CatalogueDetailViewModel
 import com.albar.moviecatalogue.ui.movie.MovieViewModel
 import com.albar.moviecatalogue.ui.tvshow.TvShowViewModel
 
@@ -28,6 +29,9 @@ class ViewModelFactory private constructor(private val catalogueRepository: Cata
             }
             modelClass.isAssignableFrom(TvShowViewModel::class.java) -> {
                 TvShowViewModel(catalogueRepository) as T
+            }
+            modelClass.isAssignableFrom(CatalogueDetailViewModel::class.java) -> {
+                CatalogueDetailViewModel(catalogueRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class" + modelClass.name)
         }

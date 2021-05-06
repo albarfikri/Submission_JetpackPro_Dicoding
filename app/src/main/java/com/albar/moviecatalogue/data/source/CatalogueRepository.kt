@@ -1,5 +1,6 @@
 package com.albar.moviecatalogue.data.source
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.albar.moviecatalogue.data.CatalogueDataModel
@@ -9,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class CatalogueRepository private constructor(private val remoteDataSource: RemoteDataSource) :
+class CatalogueRepository private constructor(private val catalogueRemoteDataSource: CatalogueRemoteDataSource) :
     CatalogueDataSource {
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -20,9 +21,9 @@ class CatalogueRepository private constructor(private val remoteDataSource: Remo
         private var instance: CatalogueRepository? = null
 
 
-        fun getInstance(remoteData: RemoteDataSource): CatalogueRepository =
+        fun getInstance(catalogueRemoteData: CatalogueRemoteDataSource): CatalogueRepository =
             instance ?: synchronized(this) {
-                instance ?: CatalogueRepository(remoteData).apply { instance = this }
+                instance ?: CatalogueRepository(catalogueRemoteData).apply { instance = this }
             }
 
     }
@@ -31,7 +32,8 @@ class CatalogueRepository private constructor(private val remoteDataSource: Remo
         val listMoviesOutput = MutableLiveData<List<CatalogueDataModel>>()
         _isLoading.value = true
         CoroutineScope(IO).launch {
-            remoteDataSource.getMovies(object : RemoteDataSource.LoadMovieCallback {
+            catalogueRemoteDataSource.getMovies(object :
+                CatalogueRemoteDataSource.LoadMovieCallback {
                 override fun onAllMovieReceived(movieCatalogueResponse: List<ResultsItemMovie>) {
                     val listMovies = ArrayList<CatalogueDataModel>()
                     for (response in movieCatalogueResponse) {
@@ -56,15 +58,11 @@ class CatalogueRepository private constructor(private val remoteDataSource: Remo
         return listMoviesOutput
     }
 
-    override fun getMovieById(movieId: Int): LiveData<CatalogueDataModel> {
-        TODO("Not yet implemented")
-    }
-
     override fun getTvShow(): LiveData<List<CatalogueDataModel>> {
-        val listMoviesOutput = MutableLiveData<List<CatalogueDataModel>>()
         val listTvShowOutput = MutableLiveData<List<CatalogueDataModel>>()
         CoroutineScope(IO).launch {
-            remoteDataSource.getTvShows(object : RemoteDataSource.LoadTvShowCallback {
+            catalogueRemoteDataSource.getTvShows(object :
+                CatalogueRemoteDataSource.LoadTvShowCallback {
                 override fun onAllTvShowReceived(tvShowCatalogueResponse: List<ResultsItemTvShow>) {
                     val listTvShow = ArrayList<CatalogueDataModel>()
                     for (response in tvShowCatalogueResponse) {
@@ -89,9 +87,53 @@ class CatalogueRepository private constructor(private val remoteDataSource: Remo
         return listTvShowOutput
     }
 
-    override fun getTvShowById(tvshowId: Int): LiveData<CatalogueDataModel> {
-        TODO("Not yet implemented")
+    override fun getTvShowById(tvShowId: Int): LiveData<CatalogueDataModel> {
+        val tvShowDetailOutput = MutableLiveData<CatalogueDataModel>()
+        CoroutineScope(IO).launch {
+            catalogueRemoteDataSource.getTvShowDetail(
+                tvShowId,
+                object : CatalogueRemoteDataSource.LoadTvShowsByIdCallback {
+                    override fun onTvShowsDetailReceived(tvShowsCatalogue: ResultsItemTvShow) {
+                        val tvShowsDetail = CatalogueDataModel(
+                            tvShowsCatalogue.id,
+                            tvShowsCatalogue.originalName,
+                            tvShowsCatalogue.posterPath,
+                            tvShowsCatalogue.backdropPath,
+                            tvShowsCatalogue.firstAirDate,
+                            tvShowsCatalogue.popularity,
+                            tvShowsCatalogue.voteAverage,
+                            tvShowsCatalogue.voteCount,
+                            tvShowsCatalogue.overview
+                        )
+                        tvShowDetailOutput.postValue(tvShowsDetail)
+                    }
+                })
+        }
+        return tvShowDetailOutput
     }
 
-
+    override fun getMovieById(movieId: Int): LiveData<CatalogueDataModel> {
+        val movieDetailOutput = MutableLiveData<CatalogueDataModel>()
+        CoroutineScope(IO).launch {
+            catalogueRemoteDataSource.getMovieDetail(
+                movieId,
+                object : CatalogueRemoteDataSource.LoadMovieByIdCallback {
+                    override fun onMovieDetailReceived(movieCatalogueResponse: ResultsItemMovie) {
+                        val moviesDetail = CatalogueDataModel(
+                            movieCatalogueResponse.id,
+                            movieCatalogueResponse.title,
+                            movieCatalogueResponse.posterPath,
+                            movieCatalogueResponse.backdropPath,
+                            movieCatalogueResponse.releaseDate,
+                            movieCatalogueResponse.popularity,
+                            movieCatalogueResponse.voteAverage,
+                            movieCatalogueResponse.voteCount,
+                            movieCatalogueResponse.overview
+                        )
+                        movieDetailOutput.postValue(moviesDetail)
+                    }
+                })
+        }
+        return movieDetailOutput
+    }
 }

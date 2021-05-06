@@ -10,4 +10,7 @@
     <string name="movie">Movies</string>
     <string name="tvshow">Tv Shows</string>
     <string name="buy">Buy Now</string>
+    <string name="loading">Loading..</string>
+    <string name="user_score">User Score</string>
+
 </resources>
