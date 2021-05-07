@@ -1,15 +1,12 @@
 package com.albar.moviecatalogue.ui.detailcatalogue
 
 import android.os.Bundle
-import android.util.Log
-import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.albar.moviecatalogue.BuildConfig
 import com.albar.moviecatalogue.R
 import com.albar.moviecatalogue.data.CatalogueDataModel
-import com.albar.moviecatalogue.data.CatalogueEntity
 import com.albar.moviecatalogue.databinding.DetailCatalogueBinding
 import com.albar.moviecatalogue.viewmodel.ViewModelFactory
 import com.bumptech.glide.Glide
@@ -24,6 +21,7 @@ class CatalogueDetailActivity : AppCompatActivity() {
     companion object {
         const val extraIdMovie = "extra_Id_Movie"
         const val extraIdTvShow = "extra_Id_TvShow"
+        const val type = "not set"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,18 +41,21 @@ class CatalogueDetailActivity : AppCompatActivity() {
         if (extras != null) {
             val catalogueIdMovie = extras.getInt(extraIdMovie, 0)
             val catalogueIdTvShow = extras.getInt(extraIdTvShow, 0)
-            Log.d("testing", catalogueIdMovie.toString())
+            val type = extras.getString(type)
 
-            viewModel.getMovieDetailById(catalogueIdMovie).observe(this, Observer {
-                it?.let {
-                    populateData(it)
-                }
-            })
-//            if (catalogueIdTvShow != null) {
-//                viewModel.getMovieDetailById(catalogueIdMovie).observe(this, Observer{
-//                    populateData(it)
-//                })
-//            }
+            if (type.equals("Movie")) {
+                viewModel.getMovieDetailById(catalogueIdMovie).observe(this, Observer {
+                    it?.let {
+                        populateData(it)
+                    }
+                })
+            } else if (type.equals("TvShow")) {
+                viewModel.getTvShowDetailById(catalogueIdTvShow).observe(this, Observer {
+                    it?.let {
+                        populateData(it)
+                    }
+                })
+            }
         }
     }
 

@@ -78,6 +78,7 @@ class MovieAdapter(private val context: Context) :
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, CatalogueDetailActivity::class.java)
                     intent.putExtra(CatalogueDetailActivity.extraIdMovie, movie.id)
+                    intent.putExtra(CatalogueDetailActivity.type, "Movie")
                     itemView.context.startActivity(intent)
                 }
                 Glide.with(itemView.context)

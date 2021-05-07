@@ -65,6 +65,7 @@ class TvShowAdapter(private val context: Context) :
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, CatalogueDetailActivity::class.java)
                     intent.putExtra(CatalogueDetailActivity.extraIdTvShow, tvShow.id)
+                    intent.putExtra(CatalogueDetailActivity.type, "TvShow")
                     itemView.context.startActivity(intent)
                 }
                 Glide.with(itemView.context)
