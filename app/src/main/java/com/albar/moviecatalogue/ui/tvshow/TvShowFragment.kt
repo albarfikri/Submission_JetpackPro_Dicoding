@@ -5,16 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.albar.moviecatalogue.databinding.FragmentTvShowBinding
+import com.albar.moviecatalogue.ui.movie.MovieFragment
 import com.albar.moviecatalogue.viewmodel.ViewModelFactory
 
 
 class TvShowFragment : Fragment() {
     private lateinit var binding: FragmentTvShowBinding
     private lateinit var viewModel: TvShowViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,17 +43,19 @@ class TvShowFragment : Fragment() {
     }
 
     private fun viewModel() {
-        viewModel.getLoadingState().observe(this, {
-            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
-        })
+        MovieFragment.handler.postDelayed({
+            viewModel.getLoadingState().observe(this, {
+                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+            })
 
-        viewModel.getAllTvShowsList().observe(viewLifecycleOwner, { listTvShows ->
-            binding.rvTvshow.adapter?.let { adapter ->
-                when (adapter) {
-                    is TvShowAdapter -> adapter.setTvShow(listTvShows)
+            viewModel.getAllTvShowsList().observe(viewLifecycleOwner, { listTvShows ->
+                binding.rvTvshow.adapter?.let { adapter ->
+                    when (adapter) {
+                        is TvShowAdapter -> adapter.setTvShow(listTvShows)
+                    }
                 }
-            }
-        })
+            })
+        }, MovieFragment.delayedTime)
     }
 
     private fun recyclerTvShows() {

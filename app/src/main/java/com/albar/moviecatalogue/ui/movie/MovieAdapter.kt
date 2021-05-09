@@ -2,14 +2,13 @@ package com.albar.moviecatalogue.ui.movie
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.albar.moviecatalogue.BuildConfig
 import com.albar.moviecatalogue.R
-import com.albar.moviecatalogue.data.CatalogueDataModel
+import com.albar.moviecatalogue.data.source.remote.response.ResultsItemMovie
 import com.albar.moviecatalogue.databinding.ItemsMovieBinding
 import com.albar.moviecatalogue.ui.detailcatalogue.CatalogueDetailActivity
 import com.bumptech.glide.GenericTransitionOptions
@@ -20,9 +19,9 @@ import com.bumptech.glide.request.RequestOptions
 
 class MovieAdapter(private val context: Context) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-    private val listMovie = ArrayList<CatalogueDataModel>()
+    private val listMovie = ArrayList<ResultsItemMovie>()
 
-    fun setMovie(movie: List<CatalogueDataModel>) {
+    fun setMovie(movie: List<ResultsItemMovie>) {
         this.listMovie.clear()
         this.listMovie.addAll(movie)
         notifyDataSetChanged()
@@ -58,22 +57,12 @@ class MovieAdapter(private val context: Context) :
 
     class MovieViewHolder(val binding: ItemsMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: CatalogueDataModel) {
+        fun bind(movie: ResultsItemMovie) {
             with(binding) {
                 tvMovieName.text = movie.title
                 tvMovieReview.text = movie.voteAverage.toString()
                 tvMovieDate.text = movie.releaseDate
-                tvMovieRating.progress = movie.voteAverage?.toFloat()!!
-//                if (movie.voteAverage!! <= 7) {
-//                    Log.d("print", movie.voteAverage.toString())
-//                    tvMovieRating.progressBarColor = R.color.purple_500
-//                    tvMovieRating.backgroundProgressBarColor = R.color.purple_200
-//                    movie.voteAverage.toFloat().let { tvMovieRating.setProgressWithAnimation(it) }
-//                } else{
-//                    tvMovieRating.progressBarColor = R.color.purple_500
-//                    tvMovieRating.backgroundProgressBarColor = R.color.teal_700
-//                    movie.voteAverage.toFloat().let { tvMovieRating.setProgressWithAnimation(it) }
-//                }
+                tvMovieRating.progress = movie.voteAverage.toFloat()
 
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, CatalogueDetailActivity::class.java)
@@ -93,5 +82,4 @@ class MovieAdapter(private val context: Context) :
             }
         }
     }
-
 }

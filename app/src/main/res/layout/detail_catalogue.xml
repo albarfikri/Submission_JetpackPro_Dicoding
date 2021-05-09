@@ -2,7 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/progressBar"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ctr_bg">
@@ -53,7 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/layout_bg"
-        android:fillViewport="true"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,26 +60,48 @@
             android:layout_height="match_parent"
             android:padding="4dp">
 
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="1076dp"
+                android:layout_height="254dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_baseline_bookmark_24_saved"
+                app:layout_constraintEnd_toEndOf="@+id/tv_image"
+                app:layout_constraintStart_toStartOf="@+id/tv_image"
+                app:layout_constraintTop_toTopOf="@+id/tv_image"
+                android:contentDescription="@string/loading" />
+
             <ImageView
                 android:id="@+id/tv_image"
                 android:layout_width="165dp"
                 android:layout_height="221dp"
                 android:contentDescription="@string/loading"
                 android:src="@color/black"
+                android:translationZ="20dp"
                 app:layout_collapseMode="pin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.127"
+                app:layout_constraintVertical_bias="0.114"
                 tools:src="@color/teal_200" />
 
             <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                android:id="@+id/tv_movieRating"
+                android:id="@+id/tv_movieRatingCircle"
                 android:layout_width="45dp"
                 android:layout_height="84dp"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="24dp"
                 android:translationZ="12dp"
                 app:cpb_background_progressbar_color="#f48fb1"
                 app:cpb_background_progressbar_width="5dp"
@@ -93,19 +114,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_image" />
 
             <TextView
+                android:id="@+id/tv_userScore"
                 android:layout_width="64dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:drawablePadding="4dp"
                 android:gravity="center_vertical"
                 android:text="@string/user_score"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_movieRating"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_movieRatingCircle"
                 app:layout_constraintEnd_toEndOf="@+id/tv_image"
-                app:layout_constraintStart_toEndOf="@+id/tv_movieRating"
-                app:layout_constraintTop_toTopOf="@+id/tv_movieRating"
+                app:layout_constraintStart_toEndOf="@+id/tv_movieRatingCircle"
+                app:layout_constraintTop_toTopOf="@+id/tv_movieRatingCircle"
                 tools:ignore="RtlCompat" />
 
             <TextView
@@ -116,10 +138,10 @@
                 android:gravity="center_vertical"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_movieRating"
-                app:layout_constraintEnd_toEndOf="@+id/tv_movieRating"
-                app:layout_constraintStart_toStartOf="@+id/tv_movieRating"
-                app:layout_constraintTop_toTopOf="@+id/tv_movieRating"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_movieRatingCircle"
+                app:layout_constraintEnd_toEndOf="@+id/tv_movieRatingCircle"
+                app:layout_constraintStart_toStartOf="@+id/tv_movieRatingCircle"
+                app:layout_constraintTop_toTopOf="@+id/tv_movieRatingCircle"
                 tools:text="25%" />
 
             <TextView
@@ -129,7 +151,6 @@
                 android:layout_marginTop="78dp"
                 android:drawablePadding="4dp"
                 android:gravity="center_vertical"
-                android:text="@string/loading"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/tv_image"
@@ -138,15 +159,13 @@
                 tools:text="12-12-2020" />
 
 
-
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tv_explainDetail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="12dp"
-                android:text="@string/about"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -165,10 +184,10 @@
                 android:gravity="center_vertical"
                 android:justificationMode="inter_word"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView4"
+                app:layout_constraintEnd_toEndOf="@+id/tv_explainDetail"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                app:layout_constraintStart_toStartOf="@+id/tv_explainDetail"
+                app:layout_constraintTop_toBottomOf="@+id/tv_explainDetail"
                 tools:text="@string/about" />
 
             <Button
@@ -178,6 +197,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
+                android:layout_marginBottom="24dp"
                 android:background="@drawable/bg_button"
                 android:clickable="true"
                 android:elevation="100dp"
@@ -185,7 +205,6 @@
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
-                android:layout_marginBottom="24dp"
                 app:layout_constraintTop_toBottomOf="@+id/tv_about"
                 tools:layout_editor_absoluteX="4dp" />
 
@@ -200,12 +219,11 @@
         android:backgroundTint="#0288d1"
         android:baselineAlignBottom="false"
         android:clickable="true"
+        android:contentDescription="@string/loading"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:src="@drawable/ic_baseline_bookmark_24"
         app:fabSize="normal"
         app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="end|bottom"
-        android:contentDescription="@string/loading" />
-
+        app:layout_anchorGravity="end|bottom" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

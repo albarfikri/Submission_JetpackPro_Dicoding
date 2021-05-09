@@ -66,11 +66,9 @@ class CatalogueRemoteDataSource {
         fun onAllTvShowReceived(tvShowCatalogueResponse: List<ResultsItemTvShow>)
     }
 
-
     interface LoadMovieByIdCallback {
         fun onMovieDetailReceived(movieCatalogueResponse: ResultsItemMovie)
     }
-
 
     interface LoadTvShowsByIdCallback {
         fun onTvShowsDetailReceived(tvShowsCatalogue: ResultsItemTvShow)

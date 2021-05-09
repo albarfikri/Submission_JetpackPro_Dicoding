@@ -8,23 +8,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
-class CatalogueRepository private constructor(private val catalogueRemoteDataSource: CatalogueRemoteDataSource) :
+class FakeCatalogueRepository(private val catalogueRemoteDataSource: CatalogueRemoteDataSource) :
     CatalogueDataSource {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
-
-    companion object {
-        @Volatile
-        private var instance: CatalogueRepository? = null
-
-
-        fun getInstance(catalogueRemoteData: CatalogueRemoteDataSource): CatalogueRepository =
-            instance ?: synchronized(this) {
-                instance ?: CatalogueRepository(catalogueRemoteData).apply { instance = this }
-            }
-
-    }
 
     override fun getMovie(): LiveData<List<ResultsItemMovie>> {
         val listMoviesOutput = MutableLiveData<List<ResultsItemMovie>>()

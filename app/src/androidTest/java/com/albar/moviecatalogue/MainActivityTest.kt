@@ -2,23 +2,21 @@ package com.albar.moviecatalogue
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.openLinkWithText
+import androidx.test.espresso.action.ViewActions.swipeUp
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.albar.moviecatalogue.utils.DataDummy
 import com.albar.moviecatalogue.utils.IdlingResource
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4ClassRunner::class)
 class MainActivityTest {
     private val dummyMovie = DataDummy.getAllDummyMovie()
     private val dummyTvShow = DataDummy.getAllDummyTvShow()
@@ -29,48 +27,62 @@ class MainActivityTest {
     @Before
     fun setUp() {
         IdlingRegistry.getInstance()
-            .register(IdlingResource.EspressoIdlingResource.espressoTestIdlingResource)
+            .register(IdlingResource.espressoTestIdlingResource)
     }
 
     @After
     fun tearDown() {
         IdlingRegistry.getInstance()
-            .unregister(IdlingResource.EspressoIdlingResource.espressoTestIdlingResource)
+            .unregister(IdlingResource.espressoTestIdlingResource)
     }
 
     @Test
     fun loadMovie() {
+        onView(withText("Movies")).perform(click())
         onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie)).perform(
             RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
                 dummyMovie.size
             )
         )
+        delayedTime()
         onView(withId(R.id.rv_movie)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
+                6,
                 click()
             )
         )
 
-        onView(withId(R.id.image_poster)).check(matches(isDisplayed()))
-        onView(withId(R.id.image)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_name)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_name)).check(matches(withText(dummyMovie[0].movieName)))
+        onView(withId(R.id.tv_backdrop)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_backdrop)).perform(swipeUp())
+
+        onView(withId(R.id.tv_image)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_image)).perform(swipeUp())
+
+        onView(withId(R.id.tv_movieRatingCircle)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_movieRatingCircle)).perform(swipeUp())
+
+        onView(withId(R.id.tv_movieRatingText)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_movieRatingText)).perform(swipeUp())
+
+        onView(withId(R.id.tv_userScore)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_userScore)).perform(swipeUp())
+
+        onView(withId(R.id.tv_explainDetail)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_explainDetail)).perform(swipeUp())
+
         onView(withId(R.id.tv_release)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_release)).check(matches(withText(dummyMovie[0].release.toString())))
-        onView(withId(R.id.tv_price)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_price)).check(matches(withText(dummyMovie[0].price)))
-        onView(withId(R.id.tv_review)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_review)).check(matches(withText(dummyMovie[0].review)))
-        onView(withId(R.id.tv_rating)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_rating)).check(matches(withText(dummyMovie[0].rating.toString())))
-        onView(withId(R.id.tv_duration)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_duration)).check(matches(withText(dummyMovie[0].duration)))
+        onView(withId(R.id.tv_release)).perform(swipeUp())
+
+        onView(withId(R.id.tv_about)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_about)).perform(swipeUp())
+
+        onView(withId(R.id.collapsing_toolbar)).check(matches(isDisplayed()))
+
         onView(withId(R.id.btn_buy)).check(matches(isDisplayed()))
         onView(withId(R.id.btn_buy)).perform(click())
-        onView(withId(R.id.tv_about)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_about)).check(matches(withText(dummyMovie[0].about)))
+
+        pressBack()
     }
 
 
@@ -83,30 +95,51 @@ class MainActivityTest {
                 dummyTvShow.size
             )
         )
+        delayedTime()
         onView(withId(R.id.rv_tvshow)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
+                6,
                 click()
             )
         )
-        onView(withId(R.id.image_poster)).check(matches(isDisplayed()))
-        onView(withId(R.id.image)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_name)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_name)).check(matches(withText(dummyTvShow[0].movieName)))
+
+        onView(withId(R.id.tv_backdrop)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_backdrop)).perform(swipeUp())
+
+        onView(withId(R.id.tv_image)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_image)).perform(swipeUp())
+
+        onView(withId(R.id.tv_movieRatingCircle)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_movieRatingCircle)).perform(swipeUp())
+
+        onView(withId(R.id.tv_movieRatingText)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_movieRatingText)).perform(swipeUp())
+
+        onView(withId(R.id.tv_userScore)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_userScore)).perform(swipeUp())
+
+        onView(withId(R.id.tv_explainDetail)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_explainDetail)).perform(swipeUp())
+
         onView(withId(R.id.tv_release)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_release)).check(matches(withText(dummyTvShow[0].release.toString())))
-        onView(withId(R.id.tv_price)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_price)).check(matches(withText(dummyTvShow[0].price)))
-        onView(withId(R.id.tv_review)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_review)).check(matches(withText(dummyTvShow[0].review)))
-        onView(withId(R.id.tv_rating)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_rating)).check(matches(withText(dummyTvShow[0].rating.toString())))
-        onView(withId(R.id.tv_duration)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_duration)).check(matches(withText(dummyTvShow[0].duration)))
+        onView(withId(R.id.tv_release)).perform(swipeUp())
+
+        onView(withId(R.id.tv_about)).check(matches(isDisplayed()))
+        onView(withId(R.id.tv_about)).perform(swipeUp())
+
+        onView(withId(R.id.collapsing_toolbar)).check(matches(isDisplayed()))
+
         onView(withId(R.id.btn_buy)).check(matches(isDisplayed()))
         onView(withId(R.id.btn_buy)).perform(click())
-        onView(withId(R.id.tv_about)).check(matches(isDisplayed()))
-        onView(withId(R.id.tv_about)).check(matches(withText(dummyTvShow[0].about)))
+
+        pressBack()
     }
 
+    private fun delayedTime() {
+        try {
+            Thread.sleep(2000)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+    }
 }

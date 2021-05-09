@@ -1,15 +1,16 @@
 package com.albar.moviecatalogue.data.source
 
 import androidx.lifecycle.LiveData
-import com.albar.moviecatalogue.data.CatalogueDataModel
+import com.albar.moviecatalogue.data.source.remote.response.ResultsItemMovie
+import com.albar.moviecatalogue.data.source.remote.response.ResultsItemTvShow
 
 interface CatalogueDataSource {
 
-    fun getMovie(): LiveData<List<CatalogueDataModel>>
+    fun getMovie(): LiveData<List<ResultsItemMovie>>
 
-    fun getMovieById(movieId: Int): LiveData<CatalogueDataModel>
+    fun getMovieById(movieId: Int): LiveData<ResultsItemMovie>
 
-    fun getTvShow(): LiveData<List<CatalogueDataModel>>
+    fun getTvShow(): LiveData<List<ResultsItemTvShow>>
 
-    fun getTvShowById(tvShowId: Int): LiveData<CatalogueDataModel>
+    fun getTvShowById(tvShowId: Int): LiveData<ResultsItemTvShow>
 }

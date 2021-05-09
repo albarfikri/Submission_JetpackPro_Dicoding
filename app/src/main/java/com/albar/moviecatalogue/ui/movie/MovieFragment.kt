@@ -2,6 +2,8 @@ package com.albar.moviecatalogue.ui.movie
 
 import android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,12 @@ import com.albar.moviecatalogue.viewmodel.ViewModelFactory
 class MovieFragment : Fragment() {
     private lateinit var binding: FragmentMovieBinding
     private lateinit var viewModel: MovieViewModel
+
+    companion object {
+        val handler = Handler(Looper.getMainLooper())
+        const val delayedTime: Long = 2000
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,16 +49,18 @@ class MovieFragment : Fragment() {
     }
 
     private fun viewModel() {
-        viewModel.getLoadingState().observe(this, {
-            binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
-        })
-        viewModel.getAllMoviesList().observe(viewLifecycleOwner, { listMovie ->
-            binding.rvMovie.adapter?.let { adapter ->
-                when (adapter) {
-                    is MovieAdapter -> adapter.setMovie(listMovie)
+        handler.postDelayed({
+            viewModel.getLoadingState().observe(this, {
+                binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+            })
+            viewModel.getAllMoviesList().observe(viewLifecycleOwner, { listMovie ->
+                binding.rvMovie.adapter?.let { adapter ->
+                    when (adapter) {
+                        is MovieAdapter -> adapter.setMovie(listMovie)
+                    }
                 }
-            }
-        })
+            })
+        }, delayedTime)
     }
 
     private fun recyclerMovies() {

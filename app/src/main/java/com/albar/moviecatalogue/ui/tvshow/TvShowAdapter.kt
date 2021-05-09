@@ -8,8 +8,7 @@ import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.albar.moviecatalogue.BuildConfig
 import com.albar.moviecatalogue.R
-import com.albar.moviecatalogue.data.CatalogueDataModel
-import com.albar.moviecatalogue.data.CatalogueEntity
+import com.albar.moviecatalogue.data.source.remote.response.ResultsItemTvShow
 import com.albar.moviecatalogue.databinding.ItemsTvshowBinding
 import com.albar.moviecatalogue.ui.detailcatalogue.CatalogueDetailActivity
 import com.bumptech.glide.Glide
@@ -17,9 +16,9 @@ import com.bumptech.glide.request.RequestOptions
 
 class TvShowAdapter(private val context: Context) :
     RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
-    private val listTvShow = ArrayList<CatalogueDataModel>()
+    private val listTvShow = ArrayList<ResultsItemTvShow>()
 
-    fun setTvShow(tvShow: List<CatalogueDataModel>) {
+    fun setTvShow(tvShow: List<ResultsItemTvShow>) {
         this.listTvShow.clear()
         this.listTvShow.addAll(tvShow)
         notifyDataSetChanged()
@@ -55,10 +54,10 @@ class TvShowAdapter(private val context: Context) :
 
     class TvShowViewHolder(val binding: ItemsTvshowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(tvShow: CatalogueDataModel) {
+        fun bind(tvShow: ResultsItemTvShow) {
             with(binding) {
-                tvShowName.text = tvShow.title
-                tvShowDate.text = tvShow.releaseDate
+                tvShowName.text = tvShow.originalName
+                tvShowDate.text = tvShow.firstAirDate
                 tvShowReview.text = tvShow.voteAverage.toString()
                 tvShowDuration.text = tvShow.voteCount.toString()
                 tvShowImageView.progress = tvShow.voteAverage?.toFloat()!!
@@ -69,12 +68,11 @@ class TvShowAdapter(private val context: Context) :
                     itemView.context.startActivity(intent)
                 }
                 Glide.with(itemView.context)
-                    .load(BuildConfig.IMAGE_URL+tvShow.posterPath)
+                    .load(BuildConfig.IMAGE_URL + tvShow.posterPath)
                     .apply(
                         RequestOptions.placeholderOf(R.drawable.ic_loading)
                             .error(R.drawable.ic_error)
                     )
-
                     .into(tvShowImage)
             }
         }
