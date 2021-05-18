@@ -2,14 +2,22 @@ package com.albar.moviecatalogue.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagedList
+import com.albar.moviecatalogue.data.local.LocalDataSource
+import com.albar.moviecatalogue.data.local.entity.MoviesEntity
+import com.albar.moviecatalogue.data.local.entity.TvShowsEntity
 import com.albar.moviecatalogue.data.source.remote.response.ResultsItemMovie
 import com.albar.moviecatalogue.data.source.remote.response.ResultsItemTvShow
+import com.albar.moviecatalogue.vo.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CatalogueRepository private constructor(private val catalogueRemoteDataSource: CatalogueRemoteDataSource) :
-    CatalogueDataSource {
+class CatalogueRepository @Inject private constructor(
+    private val catalogueRemoteDataSource: CatalogueRemoteDataSource,
+    private val catalogueLocalDataSource: LocalDataSource
+) : CatalogueDataSource {
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -26,7 +34,7 @@ class CatalogueRepository private constructor(private val catalogueRemoteDataSou
 
     }
 
-    override fun getMovie(): LiveData<List<ResultsItemMovie>> {
+    override fun getMovie(): LiveData<Resource<PagedList<MoviesEntity>>> {
         val listMoviesOutput = MutableLiveData<List<ResultsItemMovie>>()
         _isLoading.value = true
         CoroutineScope(IO).launch {
@@ -111,6 +119,7 @@ class CatalogueRepository private constructor(private val catalogueRemoteDataSou
         return tvShowDetailOutput
     }
 
+
     override fun getMovieById(movieId: Int): LiveData<ResultsItemMovie> {
         val movieDetailOutput = MutableLiveData<ResultsItemMovie>()
         CoroutineScope(IO).launch {
@@ -135,5 +144,21 @@ class CatalogueRepository private constructor(private val catalogueRemoteDataSou
                 })
         }
         return movieDetailOutput
+    }
+
+    override fun getAllFavByTvShows(): LiveData<PagedList<TvShowsEntity>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAllFavByMovies(): LiveData<PagedList<MoviesEntity>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun setFavMovie(movie: MoviesEntity) {
+        TODO("Not yet implemented")
+    }
+
+    override fun setFavTvShow(tvShow: TvShowsEntity) {
+        TODO("Not yet implemented")
     }
 }

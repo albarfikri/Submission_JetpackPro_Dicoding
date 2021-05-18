@@ -8,6 +8,10 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -71,6 +75,12 @@ dependencies {
     // Lottie for splash screen and not found icon
     implementation "com.airbnb.android:lottie:3.6.1"
 
+    // Dagger Dependencies 2
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
     // Coroutine Dependency
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
@@ -109,5 +119,6 @@ dependencies {
     // Cardview
     implementation 'androidx.cardview:cardview:1.0.0'
 
-
+    // Paging
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
 }
