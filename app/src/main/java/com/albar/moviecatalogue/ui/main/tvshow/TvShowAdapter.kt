@@ -1,28 +1,37 @@
-package com.albar.moviecatalogue.ui.tvshow
+package com.albar.moviecatalogue.ui.main.tvshow
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.albar.moviecatalogue.BuildConfig
 import com.albar.moviecatalogue.R
-import com.albar.moviecatalogue.data.source.remote.response.ResultsItemTvShow
+import com.albar.moviecatalogue.data.local.entity.TvShowsEntity
 import com.albar.moviecatalogue.databinding.ItemsTvshowBinding
 import com.albar.moviecatalogue.ui.detailcatalogue.CatalogueDetailActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 class TvShowAdapter(private val context: Context) :
-    RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
-    private val listTvShow = ArrayList<ResultsItemTvShow>()
+    PagedListAdapter<TvShowsEntity, TvShowAdapter.TvShowViewHolder>(DIFF_CALLBACK) {
 
-    fun setTvShow(tvShow: List<ResultsItemTvShow>) {
-        this.listTvShow.clear()
-        this.listTvShow.addAll(tvShow)
-        notifyDataSetChanged()
-    }
+        companion object {
+            private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShowsEntity>() {
+                override fun areItemsTheSame(oldItem: TvShowsEntity, newItem: TvShowsEntity): Boolean {
+                    return oldItem.idTvShow == newItem.idTvShow
+                }
+
+                @SuppressLint("DiffUtilEquals")
+                override fun areContentsTheSame(oldItem: TvShowsEntity, newItem: TvShowsEntity): Boolean {
+                    return oldItem == newItem
+                }
+            }
+        }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,7 +43,7 @@ class TvShowAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
-        val tvShow = listTvShow[position]
+        holder.bind(getItem(position) as TvShowsEntity)
         holder.binding.tvShowImage.startAnimation(
             AnimationUtils.loadAnimation(
                 context,
@@ -47,23 +56,21 @@ class TvShowAdapter(private val context: Context) :
                 R.anim.fade_scale_animation
             )
         )
-        holder.bind(tvShow)
-    }
 
-    override fun getItemCount(): Int = listTvShow.size
+    }
 
     class TvShowViewHolder(val binding: ItemsTvshowBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(tvShow: ResultsItemTvShow) {
+        fun bind(tvShow: TvShowsEntity) {
             with(binding) {
                 tvShowName.text = tvShow.originalName
                 tvShowDate.text = tvShow.firstAirDate
                 tvShowReview.text = tvShow.voteAverage.toString()
-                tvShowDuration.text = tvShow.voteCount.toString()
-                tvShowImageView.progress = tvShow.voteAverage?.toFloat()!!
+                tvShowDuration.text = tvShow.voteAverage.toString()
+                tvShowImageView.progress = tvShow.voteAverage.toFloat()
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, CatalogueDetailActivity::class.java)
-                    intent.putExtra(CatalogueDetailActivity.extraIdTvShow, tvShow.id)
+                    intent.putExtra(CatalogueDetailActivity.extraIdTvShow, tvShow.idTvShow)
                     intent.putExtra(CatalogueDetailActivity.type, "TvShow")
                     itemView.context.startActivity(intent)
                 }

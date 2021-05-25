@@ -8,14 +8,12 @@ import com.albar.moviecatalogue.data.local.entity.TvShowsEntity
 
 @Dao
 interface CatalogueDao {
-    // Getting Data
     @Query("SELECT * FROM movies")
     fun getAllMovies(): DataSource.Factory<Int, MoviesEntity>
 
     @Query("SELECT * FROM tvshows")
     fun getAllTvShows(): DataSource.Factory<Int, TvShowsEntity>
 
-    // Getting Data by Favorite
     @Query("SELECT * FROM movies WHERE idMovies = :idMovies")
     fun getDetailMovie(idMovies: Int): LiveData<MoviesEntity>
 
@@ -28,14 +26,12 @@ interface CatalogueDao {
     @Query("SELECT * FROM tvshows WHERE isFavorited = 1")
     fun getAllFavByTvShows(): DataSource.Factory<Int, TvShowsEntity>
 
-    // Inserting Data
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovies(movies: List<MoviesEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTvShows(tvShows: List<TvShowsEntity>)
 
-    // Update
     @Update(entity = MoviesEntity::class)
     fun updateMovie(movie: MoviesEntity)
 

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.albar.moviecatalogue.MainActivity
+import com.albar.moviecatalogue.R
 import com.albar.moviecatalogue.databinding.ActivitySplashScreenBinding
 
 class SplashScreenActivity : AppCompatActivity() {

@@ -1,5 +1,6 @@
 package com.albar.moviecatalogue.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.albar.moviecatalogue.data.source.remote.response.vo.ApiResponse
@@ -20,7 +21,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
         result.value = Resource.loading(null)
 
         @Suppress("LeakingThis")
-        val dbSource = loadFromDatabase()
+        val dbSource = loadFromDB()
 
         result.addSource(dbSource) { data ->
             result.removeSource(dbSource)
@@ -34,9 +35,9 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
         }
     }
 
-    protected fun onFetchFailed() {}
+    private fun onFetchFailed() {}
 
-    protected abstract fun loadFromDatabase(): LiveData<ResultType>
+    protected abstract fun loadFromDB(): LiveData<ResultType>
 
     protected abstract fun shouldFetch(data: ResultType?): Boolean
 
@@ -60,10 +61,11 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                         response.body?.let { saveCallResult(it) }
 
                         withContext(Main) {
-                            result.addSource(loadFromDatabase()) { newData ->
+                            result.addSource(loadFromDB()) { newData ->
                                 result.value = Resource.success(newData)
                             }
                         }
+
                     }
                 StatusResponse.ERROR -> {
                     onFetchFailed()

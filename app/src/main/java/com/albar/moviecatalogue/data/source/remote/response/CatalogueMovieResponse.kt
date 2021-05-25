@@ -20,7 +20,7 @@ data class CatalogueMovieResponse(
 data class ResultsItemMovie(
 
     @field:SerializedName("id")
-    val id: Int,
+    val id: Int = 0,
 
     @field:SerializedName("title")
     val title: String,

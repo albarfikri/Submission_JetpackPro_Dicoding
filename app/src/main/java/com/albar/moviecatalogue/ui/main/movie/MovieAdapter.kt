@@ -1,14 +1,16 @@
-package com.albar.moviecatalogue.ui.movie
+package com.albar.moviecatalogue.ui.main.movie
 
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.albar.moviecatalogue.BuildConfig
 import com.albar.moviecatalogue.R
-import com.albar.moviecatalogue.data.source.remote.response.ResultsItemMovie
+import com.albar.moviecatalogue.data.local.entity.MoviesEntity
 import com.albar.moviecatalogue.databinding.ItemsMovieBinding
 import com.albar.moviecatalogue.ui.detailcatalogue.CatalogueDetailActivity
 import com.bumptech.glide.GenericTransitionOptions
@@ -18,13 +20,18 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 
 class MovieAdapter(private val context: Context) :
-    RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
-    private val listMovie = ArrayList<ResultsItemMovie>()
+    PagedListAdapter<MoviesEntity, MovieAdapter.MovieViewHolder>(DIFF_CALLBACK) {
 
-    fun setMovie(movie: List<ResultsItemMovie>) {
-        this.listMovie.clear()
-        this.listMovie.addAll(movie)
-        notifyDataSetChanged()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MoviesEntity>() {
+            override fun areItemsTheSame(oldItem: MoviesEntity, newItem: MoviesEntity): Boolean {
+                return oldItem.idMovies == newItem.idMovies && oldItem.idMovies == newItem.idMovies
+            }
+
+            override fun areContentsTheSame(oldItem: MoviesEntity, newItem: MoviesEntity): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
     override fun onCreateViewHolder(
@@ -37,6 +44,7 @@ class MovieAdapter(private val context: Context) :
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        holder.bind(getItem(position) as MoviesEntity)
         holder.binding.tvMovieImage.startAnimation(
             AnimationUtils.loadAnimation(
                 context,
@@ -49,24 +57,19 @@ class MovieAdapter(private val context: Context) :
                 R.anim.fade_in
             )
         )
-        val movie = listMovie[position]
-        holder.bind(movie)
     }
 
-    override fun getItemCount(): Int = listMovie.size
-
-    class MovieViewHolder(val binding: ItemsMovieBinding) :
+    inner class MovieViewHolder(val binding: ItemsMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: ResultsItemMovie) {
+        fun bind(movie: MoviesEntity) {
             with(binding) {
                 tvMovieName.text = movie.title
                 tvMovieReview.text = movie.voteAverage.toString()
                 tvMovieDate.text = movie.releaseDate
                 tvMovieRating.progress = movie.voteAverage.toFloat()
-
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, CatalogueDetailActivity::class.java)
-                    intent.putExtra(CatalogueDetailActivity.extraIdMovie, movie.id)
+                    intent.putExtra(CatalogueDetailActivity.extraIdMovie, movie.idMovies)
                     intent.putExtra(CatalogueDetailActivity.type, "Movie")
                     itemView.context.startActivity(intent)
                 }

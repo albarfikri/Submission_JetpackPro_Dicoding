@@ -5,14 +5,9 @@ import androidx.paging.DataSource
 import com.albar.moviecatalogue.data.local.entity.MoviesEntity
 import com.albar.moviecatalogue.data.local.entity.TvShowsEntity
 import com.albar.moviecatalogue.data.local.room.CatalogueDao
+import javax.inject.Inject
 
-class LocalDataSource private constructor(private val mCatalogueDao: CatalogueDao) {
-    companion object {
-        private var INSTANCE: LocalDataSource? = null
-
-        fun getInstance(catalogueDao: CatalogueDao): LocalDataSource =
-            INSTANCE ?: LocalDataSource(catalogueDao)
-    }
+class LocalDataSource @Inject constructor(private val mCatalogueDao: CatalogueDao) {
 
     fun getAllMovies(): DataSource.Factory<Int, MoviesEntity> = mCatalogueDao.getAllMovies()
 
@@ -28,7 +23,7 @@ class LocalDataSource private constructor(private val mCatalogueDao: CatalogueDa
 
     fun insertTvShows(tvShows: List<TvShowsEntity>) = mCatalogueDao.insertTvShows(tvShows)
 
-    fun getDetailMovie(movieId: Int): LiveData<MoviesEntity> = mCatalogueDao.getDetailMovie(movieId)
+    fun getDetailMovie(idMovies: Int): LiveData<MoviesEntity> = mCatalogueDao.getDetailMovie(idMovies)
 
     fun getDetailTvShows(tvShowId: Int): LiveData<TvShowsEntity> = mCatalogueDao.getDetailTvShow(tvShowId)
 

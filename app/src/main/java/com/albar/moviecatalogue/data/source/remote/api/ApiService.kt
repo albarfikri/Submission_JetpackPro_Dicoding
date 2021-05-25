@@ -32,5 +32,4 @@ interface ApiService {
         @Path("tv_id") tvId: Int,
         @Query("api_key") apiKey: String = BuildConfig.API_TOKEN
     ): Call<ResultsItemTvShow>
-
 }

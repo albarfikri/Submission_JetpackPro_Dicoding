@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.albar.moviecatalogue.data.source.CatalogueRepository
 import com.albar.moviecatalogue.data.source.remote.response.ResultsItemMovie
+import com.albar.moviecatalogue.ui.main.movie.MovieViewModel
 import com.albar.moviecatalogue.utils.DataDummy
 import com.nhaarman.mockitokotlin2.verify
 import junit.framework.Assert.assertEquals

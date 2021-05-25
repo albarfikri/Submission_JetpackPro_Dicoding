@@ -15,7 +15,7 @@ import com.albar.moviecatalogue.data.local.entity.TvShowsEntity
 )
 
 abstract class CatalogueDatabase : RoomDatabase() {
-    abstract fun CatalogueDao(): CatalogueDao
+    abstract fun catalogueDao(): CatalogueDao
 
     companion object {
         @Volatile
@@ -26,10 +26,8 @@ abstract class CatalogueDatabase : RoomDatabase() {
                 Room.databaseBuilder(
                     context.applicationContext,
                     CatalogueDatabase::class.java,
-                    "Catalogue.db"
-                ).build().apply {
-                    INSTANCE = this
-                }
+                    "catalogueapp.db"
+                ).build()
             }
     }
 }

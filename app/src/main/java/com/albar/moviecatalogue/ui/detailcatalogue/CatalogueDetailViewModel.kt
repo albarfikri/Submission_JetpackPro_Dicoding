@@ -2,17 +2,23 @@ package com.albar.moviecatalogue.ui.detailcatalogue
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.albar.moviecatalogue.data.local.entity.MoviesEntity
+import com.albar.moviecatalogue.data.local.entity.TvShowsEntity
 import com.albar.moviecatalogue.data.source.CatalogueRepository
-import com.albar.moviecatalogue.data.source.remote.response.ResultsItemMovie
-import com.albar.moviecatalogue.data.source.remote.response.ResultsItemTvShow
 
 class CatalogueDetailViewModel(private val repository: CatalogueRepository) : ViewModel() {
 
-    fun getMovieDetailById(movieId: Int): LiveData<ResultsItemMovie> =
-        repository.getMovieById(movieId)
+    fun getMovieDetailById(idMovies: Int): LiveData<MoviesEntity> =
+        repository.getMovieById(idMovies)
 
-    fun getTvShowDetailById(tvShowsId: Int): LiveData<ResultsItemTvShow> =
+    fun getTvShowDetailById(tvShowsId: Int): LiveData<TvShowsEntity> =
         repository.getTvShowById(tvShowsId)
 
-    fun getLoadingState(): LiveData<Boolean> = repository.isLoading
+    fun setFavMovie(movie: MoviesEntity) {
+        repository.setFavMovie(movie)
+    }
+
+    fun setFavTvShow(tvShow: TvShowsEntity) {
+        repository.setFavTvShow(tvShow)
+    }
 }

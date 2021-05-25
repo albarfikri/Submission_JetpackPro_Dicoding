@@ -3,23 +3,14 @@ package com.albar.moviecatalogue.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.albar.moviecatalogue.data.source.CatalogueRepository
-import com.albar.moviecatalogue.di.Injection
 import com.albar.moviecatalogue.ui.detailcatalogue.CatalogueDetailViewModel
-import com.albar.moviecatalogue.ui.movie.MovieViewModel
-import com.albar.moviecatalogue.ui.tvshow.TvShowViewModel
+import com.albar.moviecatalogue.ui.favorite.FavViewModel
+import com.albar.moviecatalogue.ui.main.movie.MovieViewModel
+import com.albar.moviecatalogue.ui.main.tvshow.TvShowViewModel
+import javax.inject.Inject
 
-class ViewModelFactory private constructor(private val catalogueRepository: CatalogueRepository) :
+class ViewModelFactory @Inject constructor(private val catalogueRepository: CatalogueRepository) :
     ViewModelProvider.NewInstanceFactory() {
-
-    companion object {
-        @Volatile
-        private var instance: ViewModelFactory? = null
-
-        fun getInstance(): ViewModelFactory =
-            instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository())
-            }
-    }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -32,6 +23,9 @@ class ViewModelFactory private constructor(private val catalogueRepository: Cata
             }
             modelClass.isAssignableFrom(CatalogueDetailViewModel::class.java) -> {
                 CatalogueDetailViewModel(catalogueRepository) as T
+            }
+            modelClass.isAssignableFrom(FavViewModel::class.java) -> {
+                FavViewModel(catalogueRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class" + modelClass.name)
         }

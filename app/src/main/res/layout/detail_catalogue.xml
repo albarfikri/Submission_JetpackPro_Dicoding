@@ -20,8 +20,7 @@
             android:background="@drawable/ctr_bg"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-            app:title="">
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint"
@@ -37,7 +36,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.Toolbar
@@ -57,7 +55,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:padding="4dp">
 
             <ProgressBar
@@ -75,11 +73,11 @@
                 android:layout_width="1076dp"
                 android:layout_height="254dp"
                 android:layout_marginTop="20dp"
+                android:contentDescription="@string/loading"
                 android:src="@drawable/ic_baseline_bookmark_24_saved"
                 app:layout_constraintEnd_toEndOf="@+id/tv_image"
                 app:layout_constraintStart_toStartOf="@+id/tv_image"
-                app:layout_constraintTop_toTopOf="@+id/tv_image"
-                android:contentDescription="@string/loading" />
+                app:layout_constraintTop_toTopOf="@+id/tv_image" />
 
             <ImageView
                 android:id="@+id/tv_image"

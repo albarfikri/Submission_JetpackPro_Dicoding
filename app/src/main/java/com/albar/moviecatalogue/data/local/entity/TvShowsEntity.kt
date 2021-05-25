@@ -10,33 +10,27 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "tvshows")
 @Parcelize
 data class TvShowsEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "idTvShow")
-    var id: Int? = null,
+    var idTvShow: Int? = null,
 
-    @NonNull
-    @ColumnInfo(name = "tvShowImage")
-    var tvShowImage: String? = null,
+    @ColumnInfo(name = "firstAirDate")
+    var firstAirDate: String? = null,
 
-    @NonNull
-    @ColumnInfo(name = "tvShowName")
-    var tvShowName: String? = null,
+    @ColumnInfo(name = "voteAverage")
+    var voteAverage: Double = 0.0,
 
-    @NonNull
-    @ColumnInfo(name = "tvShowReview")
-    var tvShowReview: String? = null,
+    @ColumnInfo(name = "overiew")
+    var overview: String? = null,
 
-    @NonNull
-    @ColumnInfo(name = "tvShowImageView")
-    var tvShowImageView: Int? = null,
+    @ColumnInfo(name = "posterPath")
+    var posterPath: String? = null,
 
-    @NonNull
-    @ColumnInfo(name = "tvShowDate")
-    var tvShowDate: String? = null,
+    @ColumnInfo(name = "backDropPath")
+    var backDropPath: String? = null,
 
-    @NonNull
-    @ColumnInfo(name = "tvShowDuration")
-    var tvShowDuration: String? = null,
+    @ColumnInfo(name = "originalName")
+    var originalName: String? = null,
 
     @NonNull
     @ColumnInfo(name = "isFavorited")
