@@ -1,6 +1,5 @@
 package com.albar.moviecatalogue.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.albar.moviecatalogue.data.source.remote.response.vo.ApiResponse

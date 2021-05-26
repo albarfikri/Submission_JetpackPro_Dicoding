@@ -16,7 +16,6 @@ import com.albar.moviecatalogue.data.local.entity.TvShowsEntity
 
 abstract class CatalogueDatabase : RoomDatabase() {
     abstract fun catalogueDao(): CatalogueDao
-
     companion object {
         @Volatile
         private var INSTANCE: CatalogueDatabase? = null

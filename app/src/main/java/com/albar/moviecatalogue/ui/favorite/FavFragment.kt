@@ -1,15 +1,11 @@
 package com.albar.moviecatalogue.ui.favorite
 
-import android.app.ActionBar
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.albar.moviecatalogue.R
 import com.albar.moviecatalogue.databinding.FragmentFavoriteBinding
 import com.albar.moviecatalogue.viewmodel.ViewModelFactory
 import dagger.android.support.DaggerFragment

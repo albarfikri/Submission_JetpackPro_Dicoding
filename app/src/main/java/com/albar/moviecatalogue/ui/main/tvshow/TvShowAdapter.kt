@@ -20,18 +20,21 @@ import com.bumptech.glide.request.RequestOptions
 class TvShowAdapter(private val context: Context) :
     PagedListAdapter<TvShowsEntity, TvShowAdapter.TvShowViewHolder>(DIFF_CALLBACK) {
 
-        companion object {
-            private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShowsEntity>() {
-                override fun areItemsTheSame(oldItem: TvShowsEntity, newItem: TvShowsEntity): Boolean {
-                    return oldItem.idTvShow == newItem.idTvShow
-                }
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShowsEntity>() {
+            override fun areItemsTheSame(oldItem: TvShowsEntity, newItem: TvShowsEntity): Boolean {
+                return oldItem.idTvShow == newItem.idTvShow
+            }
 
-                @SuppressLint("DiffUtilEquals")
-                override fun areContentsTheSame(oldItem: TvShowsEntity, newItem: TvShowsEntity): Boolean {
-                    return oldItem == newItem
-                }
+            @SuppressLint("DiffUtilEquals")
+            override fun areContentsTheSame(
+                oldItem: TvShowsEntity,
+                newItem: TvShowsEntity
+            ): Boolean {
+                return oldItem == newItem
             }
         }
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

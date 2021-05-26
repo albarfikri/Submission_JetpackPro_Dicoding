@@ -37,7 +37,7 @@ class MainActivityTest {
     @Test
     fun load1AndInsertMainMovies() {
         onView(withId(R.id.nav_movie)).perform(click())
-        onView(withText("Movies")).perform(click())
+        onView(withText("MOVIES")).perform(click())
         onView(withId(R.id.rv_movie))
             .check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie))
@@ -136,7 +136,7 @@ class MainActivityTest {
     @Test
     fun load3FavoriteMovies() {
         onView(withId(R.id.nav_fav)).perform(click())
-        onView(withText("Movies")).perform(click())
+        onView(withText("MOVIES")).perform(click())
         onView(withId(R.id.rv_movie))
             .check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie))

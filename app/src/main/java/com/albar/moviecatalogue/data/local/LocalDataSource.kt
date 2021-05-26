@@ -23,9 +23,11 @@ class LocalDataSource @Inject constructor(private val mCatalogueDao: CatalogueDa
 
     fun insertTvShows(tvShows: List<TvShowsEntity>) = mCatalogueDao.insertTvShows(tvShows)
 
-    fun getDetailMovie(idMovies: Int): LiveData<MoviesEntity> = mCatalogueDao.getDetailMovie(idMovies)
+    fun getDetailMovie(idMovies: Int): LiveData<MoviesEntity> =
+        mCatalogueDao.getDetailMovie(idMovies)
 
-    fun getDetailTvShows(tvShowId: Int): LiveData<TvShowsEntity> = mCatalogueDao.getDetailTvShow(tvShowId)
+    fun getDetailTvShows(tvShowId: Int): LiveData<TvShowsEntity> =
+        mCatalogueDao.getDetailTvShow(tvShowId)
 
     fun setFavMovie(movie: MoviesEntity) {
         movie.isFavorited = !movie.isFavorited

@@ -3,24 +3,24 @@ package com.albar.moviecatalogue.ui.movie
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
+import com.albar.moviecatalogue.data.local.entity.MoviesEntity
 import com.albar.moviecatalogue.data.source.CatalogueRepository
-import com.albar.moviecatalogue.data.source.remote.response.ResultsItemMovie
 import com.albar.moviecatalogue.ui.main.movie.MovieViewModel
-import com.albar.moviecatalogue.utils.DataDummy
-import com.nhaarman.mockitokotlin2.verify
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertNotNull
+import com.albar.moviecatalogue.vo.Resource
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class MovieViewModelTest {
-    private lateinit var viewModel: MovieViewModel
+    private lateinit var movieViewModel: MovieViewModel
 
     @get:Rule
     // pengujian asynchronous
@@ -30,28 +30,31 @@ class MovieViewModelTest {
     private lateinit var catalogueRepository: CatalogueRepository
 
     @Mock
-    private lateinit var observer: Observer<List<ResultsItemMovie>>
+    private lateinit var observerMovie: Observer<Resource<PagedList<MoviesEntity>>>
+
+    @Mock
+    private lateinit var moviesPagedList: PagedList<MoviesEntity>
+
 
     @Before
     fun setUp() {
-        viewModel = MovieViewModel(catalogueRepository)
+        movieViewModel = MovieViewModel(catalogueRepository)
     }
 
     @Test
     fun getMovie() {
-        val dummyMoviesList = DataDummy.getAllDummyMovie()
-        val movie = MutableLiveData<List<ResultsItemMovie>>()
-        movie.value = dummyMoviesList
+        val getAllDummyMovies = Resource.success(moviesPagedList)
+        `when`(getAllDummyMovies.data?.size).thenReturn(5)
+        val movies = MutableLiveData<Resource<PagedList<MoviesEntity>>>()
+        movies.value = getAllDummyMovies
 
-        `when`(catalogueRepository.getMovie()).thenReturn(movie)
-        val movieList = viewModel.getAllMoviesList().value
-        verify(catalogueRepository).getMovie()
-        assertNotNull(movie)
-        if (movieList != null) {
-            assertEquals(20, movieList.size)
-        }
+        `when`(catalogueRepository.getMovies()).thenReturn(movies)
+        val moviesEntity = movieViewModel.getAllMoviesList().value?.data
+        Mockito.verify(catalogueRepository).getMovies()
+        Assert.assertNotNull(moviesEntity)
+        Assert.assertEquals(5, moviesEntity?.size)
 
-        viewModel.getAllMoviesList().observeForever(observer)
-        verify(observer).onChanged(dummyMoviesList)
+        movieViewModel.getAllMoviesList().observeForever(observerMovie)
+        Mockito.verify(observerMovie).onChanged(getAllDummyMovies)
     }
 }

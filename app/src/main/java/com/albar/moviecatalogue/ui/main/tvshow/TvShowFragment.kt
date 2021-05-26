@@ -6,13 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.albar.moviecatalogue.databinding.FragmentMovieBinding
 import com.albar.moviecatalogue.databinding.FragmentTvShowBinding
-import com.albar.moviecatalogue.ui.main.movie.MovieAdapter
-import com.albar.moviecatalogue.ui.main.movie.MovieViewModel
 import com.albar.moviecatalogue.viewmodel.ViewModelFactory
 import com.albar.moviecatalogue.vo.Status
 import dagger.android.support.DaggerFragment
@@ -37,7 +33,7 @@ class TvShowFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recylerTvShows()
-        activity?.let{
+        activity?.let {
             viewModelSet(it)
         }
 
@@ -49,7 +45,7 @@ class TvShowFragment : DaggerFragment() {
 
     private fun observerTvShows() {
         viewModel.getAllTvShowList().observe(viewLifecycleOwner, { listTvShow ->
-            if (listTvShow!= null) {
+            if (listTvShow != null) {
                 when (listTvShow.status) {
                     Status.LOADING -> binding.progressBar.visibility = View.VISIBLE
                     Status.SUCCESS -> {
@@ -78,7 +74,7 @@ class TvShowFragment : DaggerFragment() {
     }
 
     private fun recylerTvShows() {
-        binding.rvTvshow.apply{
+        binding.rvTvshow.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = TvShowAdapter(context)
         }
